@@ -3,12 +3,8 @@
 
 ```ts
 import { listDir, listDirFile } from 'list-dir-file';
-// 列出文件夹
+// 列出文件夹及文件名
 listDir(__dirname).subscribe(path=>{
     console.log(path)
-});
-// 列出文件名
-listDirFile(__dirname).subscribe(file=>{
-    console.log(file)
 });
 ```
