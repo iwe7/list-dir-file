@@ -13,7 +13,7 @@ function listDir(root) {
             return path_1.join(root, res);
         }), operators_1.switchMap((res) => {
             if (fs_1.lstatSync(res).isDirectory()) {
-                return listDir(res);
+                return rxjs_1.merge(rxjs_1.of(res), listDir(res));
             }
             else {
                 return rxjs_1.of(res);

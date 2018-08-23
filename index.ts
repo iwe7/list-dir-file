@@ -1,8 +1,7 @@
-import { Observable, from, of } from 'rxjs';
+import { Observable, from, of, merge } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { join } from 'path';
 import { lstatSync, readdirSync, existsSync } from 'fs';
-
 export function listDir(root: string): Observable<string> {
     if (!existsSync(root)) {
         return from([]);
@@ -14,7 +13,10 @@ export function listDir(root: string): Observable<string> {
             }),
             switchMap((res: string) => {
                 if (lstatSync(res).isDirectory()) {
-                    return listDir(res);
+                    return merge(
+                        of(res),
+                        listDir(res)
+                    );
                 } else {
                     return of(res);
                 }
